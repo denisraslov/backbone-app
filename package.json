@@ -1,0 +1,14 @@
+{
+  "name": "BlocksJS",
+  "description": "JavaScript MVC-framework based on BackboneJS",
+  "version": "0.0.1",
+  "main": "index.js",
+  "private": true,
+  "dependencies": {
+    "backbone": "^1.3.3",
+    "jquery": "^3.1.0",
+    "lodash": "^4.0.0",
+    "query-string": "^4.2.3"
+  },
+  "devDependencies": {}
+}
