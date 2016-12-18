@@ -1,7 +1,7 @@
-
 var Backbone = require('backbone'),
     _ = require('lodash'),
-    $ = require('jquery');
+    $ = require('jquery'),
+    get = require('./../kit/get');
 
 module.exports = Backbone.View.extend({
 
@@ -181,5 +181,51 @@ module.exports = Backbone.View.extend({
     },
     undelegateGlobalEvents: function() {
         $(document).off('.' + this.cid);
+    },
+
+    //---------- fetch ----------
+
+    fetch: function(resources) {
+        var block = this;
+
+        var collectionsList = _(block.collections).filter(function(collection, name) {
+            return !resources || (resources.collections && resources.collections.indexOf(name) != -1);
+        }).value();
+
+        var modelsList = _(block.models).filter(function(model, name) {
+            return (!resources || (resources.models && resources.models.indexOf(name) != -1)) && model && model.id;
+        }).value();
+
+        var dataList = collectionsList.concat(modelsList);
+
+        block.fetchList = _.map(dataList, function(data) {
+            return (data && typeof data.fetch === 'function') ? data.fetch() : data;
+        });
+
+        return $.when.apply($, block.fetchList).then(function() {
+            delete block.fetchList;
+        });
+
+    },
+    stopFetch: function() {
+        var block = this;
+
+        if (block.fetchList) {
+            _.each(block.fetchList, function(deferred) {
+                if (deferred.abort) {
+                    deferred.abort();
+                } else if (deferred.xhr) {
+                    deferred.xhr.abort();
+                }
+            });
+        }
+
+        delete block.fetchList;
+    },
+
+    //-------- utility ---------
+
+    get: function(path) {
+      return get(this, path);
     }
 });

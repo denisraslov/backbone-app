@@ -52,7 +52,6 @@ module.exports = Block.extend({
                 '</div>' +
             '</div>';
     },
-    fetch: function(){},
     navigate: function(url, params) {
         return this.router.navigate.apply(this.router, arguments);
     },
@@ -66,17 +65,23 @@ module.exports = Block.extend({
         alert(text);
     },
     initialize: function() {
-        var result = Block.prototype.initialize.apply(this, arguments),
+        var app = this,
+            result = Block.prototype.initialize.apply(this, arguments),
             router;
 
         this.render();
 
-        this.router = this.initRouter();
+        $.when(this.fetch())
+          .then(function() {
+              app.router = app.initRouter(true);
+          })
+          .fail(function() {
+              app.router = app.initRouter(false);
+          })
+          .always(function() {
+              Backbone.history.start({pushState: true});
 
-        Backbone.history.start({pushState: true});
-
-        window.APP = this;
-
-        return result;
+              window.APP = app;
+          })
     }
 });

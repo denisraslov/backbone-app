@@ -56,43 +56,6 @@ module.exports = Block.extend({
 
         return result;
     },
-    fetch: function(resources) {
-        var page = this;
-
-        var collectionsList = _(page.collections).filter(function(collection, name) {
-            return !resources || (resources.collections && resources.collections.indexOf(name) != -1);
-        }).value();
-
-        var modelsList = _(page.models).filter(function(model, name) {
-            return (!resources || (resources.models && resources.models.indexOf(name) != -1)) && model && model.id;
-        }).value();
-
-        var dataList = collectionsList.concat(modelsList);
-
-        page.fetchList = _.map(dataList, function(data) {
-            return (data && typeof data.fetch === 'function') ? data.fetch() : data;
-        });
-
-        return $.when.apply($, page.fetchList).then(function() {
-            delete page.fetchList;
-        });
-
-    },
-    stopFetch: function() {
-        var page = this;
-
-        if (page.fetchList) {
-            _.each(page.fetchList, function(deferred) {
-                if (deferred.abort) {
-                    deferred.abort();
-                } else if (deferred.xhr) {
-                    deferred.xhr.abort();
-                }
-            });
-        }
-
-        delete page.fetchList;
-    },
     loading: function () {
         document.getElementById('page').dataset.status = 'loading';
     },
