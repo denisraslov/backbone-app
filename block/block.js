@@ -1,10 +1,10 @@
 var Backbone = require('backbone'),
     _ = require('lodash'),
     $ = require('jquery'),
-    get = require('./../kit/get');
+    get = require('./../kit/get'),
+    set = require('./../kit/set');
 
 module.exports = Backbone.View.extend({
-
     globalEvents: {},
     children: [],
     isFirstRenderingCompleted: false,
@@ -227,5 +227,13 @@ module.exports = Backbone.View.extend({
 
     get: function(path) {
       return get(this, path);
+    },
+    set: function() {
+      var args = [this].concat([].slice.call(arguments)),
+          result = set.apply(null, args);
+
+          this.trigger('set', result);
+
+          return result;
     }
 });
