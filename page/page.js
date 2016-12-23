@@ -5,6 +5,8 @@ var Backbone = require('backbone'),
 
 module.exports = Block.extend({
     el: '#page',
+    models: {},
+    collections: {},
     defaultParams: {},
     template: function() {
         return '<div class="content"></div>';
@@ -20,6 +22,8 @@ module.exports = Block.extend({
         window.PAGE && window.PAGE.stopFetch();
 
         page.loading();
+
+        window.PAGE = page;
 
         $.when(Block.prototype.initialize.apply(page, arguments)).then(function(){
             $.when(page.fetch()).then(function() {
@@ -51,8 +55,6 @@ module.exports = Block.extend({
         result = Block.prototype.render.apply(page, arguments);
 
         page.loaded();
-
-        window.PAGE = page;
 
         return result;
     },

@@ -64,7 +64,7 @@ module.exports = Backbone.Model.extend({
         _.forEach(model.collections, function(collectionConstructor, key) {
 
             if (typeof collectionConstructor === 'function'){
-                model.collections[key] = collectionConstructor.call(model);
+                model.collections[key] = new collectionConstructor;
             }
 
             if (model.collections[key] instanceof Backbone.Collection){

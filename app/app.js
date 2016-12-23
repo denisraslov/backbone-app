@@ -79,9 +79,8 @@ module.exports = Block.extend({
               app.router = app.initRouter(false);
           })
           .always(function() {
-              Backbone.history.start({pushState: true});
-
               window.APP = app;
+              Backbone.history.start({pushState: true});
           })
     }
 });

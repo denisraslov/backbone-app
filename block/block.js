@@ -51,10 +51,13 @@ module.exports = Backbone.View.extend({
     },
 
     initCollections: function () {
-        var collections = this.collections;
+        var block = this,
+            collections = this.collections;
 
         _.forEach(collections, function(Collection, name) {
-            collections[name] = new Collection;
+            collections[name] = Collection.__super__
+                ? new Collection()
+                : Collection.call(block);
         });
 
         if (this.collection) {
@@ -63,10 +66,13 @@ module.exports = Backbone.View.extend({
     },
 
     initModels: function () {
-        var models = this.models;
+        var block = this,
+            models = this.models;
 
         _.forEach(models, function(Model, name) {
-            models[name] = new Model;
+            models[name] = Model.__super__
+                ? new Model()
+                : Model.call(block);
         });
 
         if (this.model) {
