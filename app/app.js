@@ -69,6 +69,8 @@ module.exports = Block.extend({
             result = Block.prototype.initialize.apply(this, arguments),
             router;
 
+        window.APP = app;
+
         this.render();
 
         $.when(this.fetch())
@@ -79,7 +81,6 @@ module.exports = Block.extend({
               app.router = app.initRouter(false);
           })
           .always(function() {
-              window.APP = app;
               Backbone.history.start({pushState: true});
           })
     }

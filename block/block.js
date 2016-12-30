@@ -2,9 +2,10 @@ var Backbone = require('backbone'),
     _ = require('lodash'),
     $ = require('jquery'),
     get = require('./../kit/get'),
-    set = require('./../kit/set');
+    set = require('./../kit/set'),
+    makeClass = require('./../kit/makeClass');
 
-module.exports = Backbone.View.extend({
+module.exports = makeClass(Backbone.View, {
     globalEvents: {},
     children: [],
     isFirstRenderingCompleted: false,
@@ -55,13 +56,11 @@ module.exports = Backbone.View.extend({
             collections = this.collections;
 
         _.forEach(collections, function(Collection, name) {
-            collections[name] = Collection.__super__
-                ? new Collection()
-                : Collection.call(block);
+            collections[name] = block.initResource(Collection);
         });
 
         if (this.collection) {
-            this.collection = new this.collection;
+            this.collection = this.initResource(this.collection);
         }
     },
 
@@ -70,13 +69,20 @@ module.exports = Backbone.View.extend({
             models = this.models;
 
         _.forEach(models, function(Model, name) {
-            models[name] = Model.__super__
-                ? new Model()
-                : Model.call(block);
+            models[name] = block.initResource(Model);
         });
 
         if (this.model) {
-            this.model = new this.model;
+            this.model = this.initResource(this.model);
+        }
+    },
+    initResource: function(Resource) {
+        if (Resource instanceof Function) {
+            return Resource.__super__
+                ? new Resource()
+                : Resource.call(this);
+        } else {
+            return Resource;
         }
     },
 
@@ -241,5 +247,8 @@ module.exports = Backbone.View.extend({
           this.trigger('set', result);
 
           return result;
+    },
+    extend: function(data) {
+        _.merge(this, data);
     }
 });

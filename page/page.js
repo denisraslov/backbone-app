@@ -34,11 +34,11 @@ module.exports = Block.extend({
     checkAccess: function() {
         return true;
     },
-    renderTemplate: function() {
-        return '<div id="page">' +
-            this.template(this) +
-            '</div>';
-    },
+    // renderTemplate: function() {
+    //     return '<div id="page">' +
+    //         this.template(this) +
+    //         '</div>';
+    // },
     render: function() {
         var page = this,
             prevPageEl = document.getElementById('page'),

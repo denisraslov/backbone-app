@@ -1,10 +1,12 @@
 var Backbone = require('backbone'),
     _ = require('lodash'),
-    $ = require('jquery');
+    $ = require('jquery'),
+    get = require('./../kit/get'),
+    set = require('./../kit/set'),
+    makeClass = require('./../kit/makeClass');
 
-module.exports = Backbone.Model.extend({
+module.exports = makeClass(Backbone.Model, {
     constructor: function(attributes, options){
-
         options = _.extend({
             parse: true
         }, options);

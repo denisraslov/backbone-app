@@ -1,7 +1,10 @@
 var Backbone = require('backbone'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    get = require('./../kit/get'),
+    set = require('./../kit/set'),
+    makeClass = require('./../kit/makeClass');
 
-module.exports = Backbone.Collection.extend({
+module.exports = makeClass(Backbone.Collection, {
     model: require('./../model/model'),
     sort: {},
     initialize: function(data, options){
@@ -43,5 +46,19 @@ module.exports = Backbone.Collection.extend({
     },
     createAllModel: function(name) {
         return new this.model({ id: 'ALL', name: name });
+    },
+
+    //-------- utility ---------
+
+    get: function(path) {
+        return get(this, path);
+    },
+    set: function() {
+        var args = [this].concat([].slice.call(arguments)),
+            result = set.apply(null, args);
+
+        this.trigger('set', result);
+
+        return result;
     }
 });
