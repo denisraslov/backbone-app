@@ -3,7 +3,8 @@ var Backbone = require('backbone'),
     $ = require('jquery'),
     get = require('./../kit/get'),
     set = require('./../kit/set'),
-    makeClass = require('./../kit/makeClass');
+    makeClass = require('./../kit/makeClass'),
+    deepExtend = require('./../kit/deepExtend');
 
 module.exports = makeClass(Backbone.View, {
     globalEvents: {},
@@ -249,6 +250,6 @@ module.exports = makeClass(Backbone.View, {
           return result;
     },
     extend: function(data) {
-        _.merge(this, data);
+        deepExtend(this, data);
     }
 });

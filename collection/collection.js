@@ -2,13 +2,14 @@ var Backbone = require('backbone'),
     _ = require('lodash'),
     get = require('./../kit/get'),
     set = require('./../kit/set'),
-    makeClass = require('./../kit/makeClass');
+    makeClass = require('./../kit/makeClass'),
+    deepExtend = require('./../kit/deepExtend');
 
 module.exports = makeClass(Backbone.Collection, {
     model: require('./../model/model'),
     sort: {},
     initialize: function(data, options){
-        _.extend(this, options);
+        deepExtend(this, options);
 
         return Backbone.Collection.prototype.initialize.apply(this, arguments);
     },
@@ -38,6 +39,7 @@ module.exports = makeClass(Backbone.Collection, {
     fetch: function(options) {
         options = options || {};
         options.reset = true;
+        options.afterFetch = true;
 
         return Backbone.Collection.prototype.fetch.call(this, options);
     },
@@ -47,18 +49,20 @@ module.exports = makeClass(Backbone.Collection, {
     createAllModel: function(name) {
         return new this.model({ id: 'ALL', name: name });
     },
+    // select: function(data) {
+    //     return data;
+    // },
+    // reset: function(data, options) {
+    //     return Backbone.Collection.prototype.reset.call(
+    //         this,
+    //         this.select(data),
+    //         options
+    //     );
+    // },
 
     //-------- utility ---------
 
-    get: function(path) {
-        return get(this, path);
-    },
-    set: function() {
-        var args = [this].concat([].slice.call(arguments)),
-            result = set.apply(null, args);
-
-        this.trigger('set', result);
-
-        return result;
+    extend: function(data) {
+        deepExtend(this, data);
     }
 });

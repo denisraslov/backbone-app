@@ -1,9 +1,10 @@
-var _ = require('lodash');
+var _ = require('lodash'),
+    deepExtend = require('./deepExtend');
 
 function makeClass(parent) {
 
     var instance = true,
-        protoProps = _.merge.apply(null, [
+        protoProps = deepExtend.apply(null, [
             {}
         ].concat([].slice.call(arguments, 1)));
 
@@ -15,7 +16,7 @@ function makeClass(parent) {
 
             for (var prop in this){
                 if (_.isPlainObject(this[prop])){
-                    this[prop] = _.merge({}, this[prop]);
+                    this[prop] = deepExtend({}, this[prop]);
                 }
 
                 if (_.isArray(this[prop])){
@@ -39,10 +40,10 @@ function makeClass(parent) {
     // Add prototype properties (instance properties) to the subclass,
     // if supplied.
     if (protoProps) {
-        _.merge(child.prototype, protoProps);
+        deepExtend(child.prototype, protoProps);
     }
 
-    return _.merge(child, parent, {
+    return deepExtend(child, parent, {
         extend: function() {
             var args = [this].concat([].slice.call(arguments));
             return makeClass.apply(null, args);

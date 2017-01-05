@@ -1,7 +1,7 @@
-
 var _ = require('lodash'),
     queryString = require('query-string'),
-    Backbone = require('backbone');
+    Backbone = require('backbone'),
+    makeClass = require('./../kit/makeClass');
 
 var Router = Backbone.Router;
 
@@ -34,16 +34,10 @@ function expand(prefix, object) {
 
 }
 
-module.exports = Router.extend({
-
-    constructor: function (options) {
-
-        options || (options = {});
-
-        options.routes = expand(options.routes);
-
+module.exports = makeClass(Router, {
+    constructor: function () {
+        this.routes = expand(this.routes);
         Router.apply(this, arguments);
-
     },
     _extractParameters: function (routeRegExp, fragment) {
 
@@ -130,7 +124,7 @@ module.exports = Router.extend({
             fragment,
             paramsString;
 
-        _.any(this.routes, function (value, key) {
+        _.some(this.routes, function (value, key) {
 
             var regExp = router._routeToRegExp(key);
 
