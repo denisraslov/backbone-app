@@ -47,6 +47,9 @@ module.exports = makeClass(Backbone.Model, {
 
         return saveData;
     },
+    get: function(path) {
+        return get(this, 'attributes.' + path);
+    },
     save: function(attributes, options) {
         return Backbone.Model.prototype.save.call(this, attributes, _.extend({
             wait: true,
