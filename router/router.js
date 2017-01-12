@@ -171,7 +171,7 @@ module.exports = makeClass(Router, {
                 return param;
             });
 
-        params = _.pick(params, function (value) {
+        params = _.pickBy(params, function (value) {
             return value !== null
                 && value !== undefined
                 && value !== '';

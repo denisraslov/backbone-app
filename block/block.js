@@ -17,7 +17,7 @@ module.exports = makeClass(Backbone.View, {
 
         this.stopListening();
 
-        _.merge(this, data);
+        deepExtend(this, data);
 
         this.initCollections();
         this.initModels();
