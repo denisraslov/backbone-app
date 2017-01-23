@@ -1,5 +1,5 @@
-# 🔥 BlocksJS 🔥
-BlocksJS is a JavaScript MVC-framework based on BackboneJS, which supports all the needed features to create working Single Page Application:
+# 🔥 backbone-app 🔥
+backbone-app is a JavaScript MVC-framework based on BackboneJS, which supports all the needed features to create working Single Page Application:
 
 Components based architecture
 
