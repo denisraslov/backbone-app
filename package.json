@@ -1,5 +1,5 @@
 {
-  "name": "BlocksJS",
+  "name": "backbone-app",
   "description": "JavaScript MVC-framework based on BackboneJS",
   "version": "0.0.1",
   "main": "index.js",

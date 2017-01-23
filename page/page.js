@@ -62,7 +62,14 @@ module.exports = Block.extend({
         document.getElementById('page').dataset.status = 'loading';
     },
     loaded: function () {
-        document.getElementById('page').dataset.status = 'loaded';
+        var page = document.getElementById('page');
+
+        if (page.dataset.status == 'loading') {
+            page.dataset.status = 'loaded';
+            setTimeout(function () {
+                page.dataset.status = '';
+            }, 600);
+        }
     },
     remove: function () {
         var block = this;

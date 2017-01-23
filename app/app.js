@@ -75,13 +75,17 @@ module.exports = Block.extend({
 
         $.when(this.fetch())
           .then(function() {
-              app.router = app.initRouter(true);
+              app.router = app.initRouter(true).then(function(router) {
+                  console.log(router)
+                 app.router = router;
+                 Backbone.history.start({pushState: true});
+              });
           })
           .fail(function() {
-              app.router = app.initRouter(false);
-          })
-          .always(function() {
-              Backbone.history.start({pushState: true});
+              app.router = app.initRouter(false).then(function(router) {
+                 app.router = router;
+                 Backbone.history.start({pushState: true});
+              });
           })
     }
 });

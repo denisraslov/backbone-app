@@ -32,7 +32,7 @@ module.exports = makeClass(Backbone.View, {
     render: function(data) {
         this.trigger('rendering');
 
-        _.merge(this, data);
+        deepExtend(this, data);
 
         this.delegateEvents();
 
@@ -53,28 +53,32 @@ module.exports = makeClass(Backbone.View, {
     },
 
     initCollections: function () {
-        var block = this,
-            collections = this.collections;
+        var block = this;
 
-        _.forEach(collections, function(Collection, name) {
-            collections[name] = block.initResource(Collection);
+        this._collections = this._collections || this.collections;
+        this.collections = {};
+        _.forEach(this._collections, function(Collection, name) {
+            block.collections[name] = block.initResource(Collection);
         });
 
-        if (this.collection) {
-            this.collection = this.initResource(this.collection);
+        this._collection = this._collection || this.collection;
+        if (this._collection) {
+            this.collection = this.initResource(this._collection);
         }
     },
 
     initModels: function () {
-        var block = this,
-            models = this.models;
+        var block = this;
 
-        _.forEach(models, function(Model, name) {
-            models[name] = block.initResource(Model);
+        this._models = this._models || this.models;
+        this.models = {};
+        _.forEach(this._models, function(Model, name) {
+            block.models[name] = block.initResource(Model);
         });
 
-        if (this.model) {
-            this.model = this.initResource(this.model);
+        this._model = this._model || this.model;
+        if (this._model) {
+            this.model = this.initResource(this._model);
         }
     },
     initResource: function(Resource) {
