@@ -1,8 +1,7 @@
 var Backbone = require('backbone'),
     _ = require('lodash'),
     $ = require('jquery'),
-    Block = require('./../block/block'),
-    makeClass = require('./../kit/makeClass');
+    Block = require('./../block/block');
 
 $(document).ajaxError(function (event, error) {
     switch (error.status) {
@@ -28,7 +27,7 @@ $(document).ajaxError(function (event, error) {
     }
 });
 
-module.exports = makeClass(Block, {
+module.exports = Block.extend({
     el: '#app',
     events: {
         'click [href]:not([external])': function (e) {

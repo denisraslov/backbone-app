@@ -1,10 +1,9 @@
 var Backbone = require('backbone'),
     _ = require('lodash'),
     $ = require('jquery'),
-    Block = require('./../block/block'),
-    makeClass = require('./../kit/makeClass');
+    Block = require('./../block/block');
 
-module.exports = makeClass(Block, {
+module.exports = Block.extend({
     el: '#page',
     models: {},
     collections: {},
