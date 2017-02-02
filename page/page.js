@@ -20,10 +20,10 @@ module.exports = Block.extend({
         }
 
         window.PAGE && window.PAGE.stopFetch();
+        page.prevPage = window.PAGE;
+        window.PAGE = page;
 
         page.loading();
-
-        window.PAGE = page;
 
         $.when(Block.prototype.initialize.apply(page, arguments)).then(function(){
             $.when(page.fetch()).then(function() {
@@ -41,14 +41,13 @@ module.exports = Block.extend({
     // },
     render: function() {
         var page = this,
-            prevPageEl = document.getElementById('page'),
             result;
 
-        if (window.PAGE) {
-            if (window.PAGE != page) {
-                window.PAGE.remove();
+        if (page.prevPage) {
+            if (page.prevPage != page) {
+                page.prevPage.remove();
             } else {
-                window.PAGE.removeBlocks();
+                page.prevPage.removeBlocks();
             }
         }
 
