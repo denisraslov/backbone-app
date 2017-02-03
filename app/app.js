@@ -3,28 +3,8 @@ var Backbone = require('backbone'),
     $ = require('jquery'),
     Block = require('./../block/block');
 
-$(document).ajaxError(function (event, error) {
-    switch (error.status) {
-        case 401:
-            Backbone.History.started && document.location.reload();
-            break;
-        case 400:
-            break;
-        case 406:
-            break;
-        case 409:
-            break;
-        case 422:
-            break;
-        default:
-            console.warn(event, error);
-
-            if (error.statusText != 'abort' && window.PAGE) {
-                APP.showAPIError(error);
-            }
-
-            break;
-    }
+$(document).ajaxError(function(event, error) {
+    APP && APP.onGlobalError(event, error);
 });
 
 module.exports = Block.extend({
@@ -87,5 +67,28 @@ module.exports = Block.extend({
                  Backbone.history.start({pushState: true});
               });
           })
+    },
+    onGlobalError: function(event, error) {
+        switch (error.status) {
+            case 401:
+                Backbone.History.started && document.location.reload();
+                break;
+            case 400:
+                break;
+            case 406:
+                break;
+            case 409:
+                break;
+            case 422:
+                break;
+            default:
+                console.warn(event, error);
+
+                if (error.statusText != 'abort' && window.PAGE) {
+                    APP.showAPIError(error);
+                }
+
+                break;
+        }
     }
 });
