@@ -1,11 +1,11 @@
-# 🔥 backbone-app 🔥
+# Backbone App
 backbone-app is a JavaScript MVC-framework based on BackboneJS, which supports all the needed features to create working Single Page Application:
 
-Components based architecture
+* Components based architecture
 
-Routing
+* Routing
 
-RESTful data fetching & handling  
+* RESTful data fetching & handling  
 
 
 ### How to start
@@ -24,5 +24,3 @@ If you don't need to work with remote API:
 5. Include your blocks in pages templates and in other blocks.
 
 That's all!
-
-
