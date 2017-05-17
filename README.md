@@ -1,4 +1,4 @@
-# Backbone App
+# <img src='http://s3-eu-west-1.amazonaws.com/jivo-userdata/avatars/2017_02/8e3301cfaf10ab847d6f113a0eead98b.jpg' height='60'> Backbone App
 backbone-app - это JavaScript MVC-фреймворк, основанный на BackboneJS, который поддерживает все необходимые фичи для реализации полноценного Single Page Application:
 
 * Компонентная архитектура
