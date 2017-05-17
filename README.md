@@ -1,26 +1,27 @@
 # Backbone App
-backbone-app is a JavaScript MVC-framework based on BackboneJS, which supports all the needed features to create working Single Page Application:
+backbone-app - это JavaScript MVC-фреймворк, основанный на BackboneJS, который поддерживает все необходимые фичи для реализации полноценного Single Page Application:
 
-* Components based architecture
+* Компонентная архитектура
 
-* Routing
+* Роутинг
 
-* RESTful data fetching & handling  
+* Работа с данными по REST 
 
 
-### How to start
-You need just 3 steps to create your app with BlocksJS:
+### Как создать приложение на базе Backbone App
 
-If you don't need to work with remote API:
+Если Вам не нужна работа с API:
 
-1. Create App class inherited from BlocksJS.App class.
+1. Создать класс App, наследуемый от класса BackboneApp.App.
 
-2. Create pages classes inherited from BlocksJS.Page class.
+2. Создать классы для каждой страницы, наследуемые от класса BackboneApp.Page.
 
-3. Create Router class inherited from BlockJS.Router class. Specify the list of routes for pages, that you created before.
+3. Создать класс роутера, наследуемый от класса BackboneApp.Router. Определить в свойстве routes список адресов, по которым должны быть доступны страницы, созданные на шаге 2.
 
-4. Create some blocks classes (this is how we call components here) inherited from BlocksJS.Block class. You can reuse them several times.
+4. Создать блоки (компоненты) интерфейса, наследуемые от класса BackboneApp.Block. Их можно переиспользовать в разных местах.
 
-5. Include your blocks in pages templates and in other blocks.
+5. Включить созданные блоки в шаблоны создаваемых страниц и новых блоков.
 
-That's all!
+Если Вам нужна работа с API:
+
+6. Создайте модель (для одной сущности) или коллекцию (для списка сущностей), наследуя их от BackboneApp.Model и BackboneApp.Collection соответственно. Пропишите в них rootUrl или url, по которому нужно загружать данные.
